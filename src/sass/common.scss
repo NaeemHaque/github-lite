@@ -1,0 +1,21 @@
+.wrapper {
+  background: #1C2128;
+  min-height: 500px;
+}
+.search-result {
+  max-width: 900px;
+}
+.search--item {
+  background: #22272E !important;
+}
+.search--item:hover {
+  cursor: pointer;
+  background: #2e3844de !important;
+}
+.bg-none {
+  background: none !important;
+}
+.decoration__none {
+  text-decoration: none !important;
+  color: aliceblue !important;
+}
