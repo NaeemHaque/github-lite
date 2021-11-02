@@ -1,29 +1,22 @@
 <template>
   <v-app>
-    <toolbar />
+<!--    <toolbar />-->
 
     <v-main>
       <router-view/>
     </v-main>
 
-    <Footeer />
-
   </v-app>
 </template>
 
 <script>
-import toolbar from './components/Toolbar'
-import Footeer from './components/Footer'
+// import toolbar from './components/Toolbar'
 
 export default {
   name: 'App',
 
   data: () => ({
     //
-  }),
-  components: {
-    toolbar,
-    Footeer
-  }
+  })
 }
 </script>

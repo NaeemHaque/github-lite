@@ -1,54 +1,19 @@
 <template>
   <div class="wrapper">
-    <v-container fluid>
-      <v-row>
-        <v-col cols="3" class="mx-auto">
-            <v-row class="mt-7">
-            <v-col cols="12" class="ml-5">
-              <v-avatar size="200">
-                <img  :src="user.avatar_url" alt="avater" />
-              </v-avatar>
-            </v-col>
-
-            <v-col class="mb-2">
-              <div>
-                <h2 class="headline font-weight-bold white--text">{{  user.name }}</h2>
-
-                <p>
-                  <span class="body-2 blue-grey--text">{{ user.login }}</span><br />
-
-                  <span class="subtitile-1 blue-grey--text"> {{ user.bio }} </span><br />
-                  <span class="subtitle-2 blue-grey--text" v-if="user.company">
-                    <v-icon left color="blue-grey">mdi-domain</v-icon>
-                    {{ user.company }}
-                  </span
-                  ><br/>
-                  <span class="subtitle-2 blue-grey--text" v-if="user.location">
-                    <v-icon left color="blue-grey">mdi-map-marker</v-icon>
-                    {{ user.location }}
-                  </span
-                  ><br/>
-                  <span class="subtitle-2 blue-grey--text" v-if="user.twitter_username">
-                    <v-icon left color="blue-grey">mdi-twitter</v-icon>
-                    {{ user.twitter_username }}
-                  </span
-                  ><br/>
-                </p>
-              </div>
-            </v-col>
-          </v-row>
-        </v-col>
+    <Toolbar/>
+    <v-container v-if="loading">
+      <LoadingBar />
+    </v-container>
+    <v-container fluid v-if="!loading">
+      <v-row class="text-center">
         <v-divider vertical class="my-5 mx-3" dark></v-divider>
-        <v-col cols="8">
+        <v-col cols="12">
             <v-card flat outlined class="mt-5 bg-none pa-4">
-
-                    <h2 class="text-center white--text mt-3 mb-6"> {{ user.public_repos }} Repositories</h2>
-
                     <div>
                         <v-row>
                           <v-col cols="12" md="6"  v-for="(item, i) in data" :key="i">
                             <v-card flat outlined class="mt-5 repo__card">
-                                <a :href="item.html_url" target="_blank" class="decoration__none">
+                                <a :href="item.htmlUrl" target="_blank" class="decoration__none">
                                   <h4 class="mt-3 ml-3 blue--text">{{item.name}}</h4>
                                 </a>
                                 <v-row class="mx-1">
@@ -102,7 +67,7 @@
                                         >
                                           mdi-eye
                                         </v-icon>
-                                        {{ item.watchers_count }}
+                                        {{ item.watching }}
                                       </template>
                                       <span>Watchers</span>
                                   </v-tooltip>
@@ -111,7 +76,7 @@
                                 </v-row>
 
                                 <p class="ml-4 mt-1 blue-grey--text caption">
-                                  <span>Updated at: {{ date[i] }}</span>
+                                  <span>Updated at: {{ item.date }}</span>
                                 </p>
                                 <p class="ml-4 blue-grey--text caption">
                                   <span> {{ item.description }} </span>
@@ -131,38 +96,64 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import Toolbar from '../../../components/NavBar'
+import LoadingBar from '../../../components/LoadingBar'
+import _ from 'lodash'
 
 export default {
   props: ['login'],
 
   data: () => ({
-    username: '',
     data: [],
-    user: [],
-    date: []
+    loading: false
   }),
+
+  components: {
+    // toolbar,
+    Toolbar,
+    LoadingBar
+  },
 
   created () {
     const name = this.login
+    this.loading = true
     axios.get('https://api.github.com/users/' + name + '/repos')
       .then((res) => {
-        this.data = res.data
-        // formate date
-        for (var i in res.data) {
-          this.date.push(moment(String(res.data[i].updated_at)).format('MM/DD/YYYY'))
-        }
+        this.data = this.prepareData(res.data)
+        this.loading = false
       })
       .catch((error) => {
+        this.loading = false
         console.log(error)
       })
-
-    axios.get('https://api.github.com/users/' + name)
-      .then((res) => {
-        this.user = res.data
+  },
+  methods: {
+    prepareData (dataItems) {
+      const preparedData = []
+      _.map(dataItems, (dataItem) => {
+        /* eslint-disable camelcase */
+        const {
+          html_url = '',
+          name = '',
+          language = '',
+          forks = '',
+          watchers_count = '',
+          description = '',
+          updated_at = ''
+        } = dataItem
+        const templateObj = {}
+        templateObj.htmlUrl = html_url || ''
+        templateObj.name = name || ''
+        templateObj.language = language || ''
+        templateObj.forks = forks || ''
+        templateObj.watching = watchers_count || ''
+        templateObj.description = description || ''
+        templateObj.date = moment(String(updated_at)).format('MM/DD/YYYY') || ''
+        preparedData.push(templateObj)
+        return templateObj
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      return preparedData
+    }
   }
 }
 </script>

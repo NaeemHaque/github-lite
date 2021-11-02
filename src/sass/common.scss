@@ -1,21 +1,21 @@
 .wrapper {
-  background: #1C2128;
+  background: #fdfdfd;
   min-height: 500px;
 }
 .search-result {
   max-width: 900px;
 }
 .search--item {
-  background: #22272E !important;
+  background: #fefcff !important;
 }
 .search--item:hover {
   cursor: pointer;
-  background: #2e3844de !important;
+  background: #f5f5f5 !important;
 }
 .bg-none {
   background: none !important;
 }
 .decoration__none {
   text-decoration: none !important;
-  color: aliceblue !important;
+  color: black !important;
 }
