@@ -31,23 +31,21 @@
   <v-container v-if="!loading">
     <div class="search-result mx-auto">
       <v-card outlined flat class="bg-none py-4">
-        <h2 class="text-center white--text my-3" >Search Result</h2>
-        <v-row class="mx-3">
-          <v-col cols="12" sm="12" class="mx-auto" v-for="item in dataItems" :key="item.id">
+        <h2 class="text-center my-3" >Github Users</h2>
+        <v-row class="ml-8" >
+          <v-col cols="4" md="4" sm="12" class="mx-auto" v-for="item in dataItems" :key="item.id">
             <router-link :to="'/profile/' + item.userName" class="decoration__none">
-              <v-card flat outlined class="pa-3 search--item">
-                <v-row>
-                  <v-col cols="2">
-                    <v-avatar>
+              <v-card elevation="14" outlined class="pa-3 my-3 search--item rounded-xl ">
+                <v-row justify="center" align="center">
+                    <v-avatar tile height="250" width="300">
                       <img
                         :src="item.userProfileImage"
                         alt="avater"
                       >
                     </v-avatar>
-                  </v-col>
-                  <v-col cols="9" class="my-auto ml-3">
-                    <h3 class="black--text px-2">{{ item.userName }}</h3>
-                  </v-col>
+                  </v-row>
+                <v-row justify="center">
+                    <h3 class="black--text  mt-7 px-2 my-auto text-center">{{ item.userName }}</h3>
                 </v-row>
               </v-card>
             </router-link>
@@ -121,12 +119,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-.v-text-field--outlined >>> fieldset {
-  border: 2px solid indigo !important;
-}
-.search.v-btn--outlined {
-  border: 2px solid indigo !important;
-}
-</style>

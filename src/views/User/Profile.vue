@@ -80,13 +80,12 @@
 
       <div class="search-result mx-auto">
 
-        <v-card outlined flat class="bg-none pa-5 white--text" >
+        <v-card outlined elevation="6" class="bg-none pa-5 white--text" >
           <v-row>
               <v-col cols="4" class="text-center repo-section">
 
                 <router-link :to="'/profile/' + data.userName + '/repos'" class="decoration__none">
                   <v-card flat class="bg-none black--text">
-                    <v-icon left dark>mdi-source-repository</v-icon>
                     Repositories({{ data.repos }})
                   </v-card>
                 </router-link>
@@ -97,7 +96,6 @@
 
                 <router-link :to="'/profile/' + data.userName + '/followers'" class="decoration__none">
                   <v-card flat class="bg-none black--text">
-                    <v-icon left dark>mdi-account-star</v-icon>
                     Followers({{ data.followers }})
                   </v-card>
                 </router-link>
@@ -108,7 +106,6 @@
 
                 <router-link :to="'/profile/' + data.userName + '/following'" class="decoration__none">
                   <v-card flat class="bg-none black--text">
-                    <v-icon left dark>mdi-account-multiple</v-icon>
                     <span>Following({{ data.following }})</span>
                   </v-card>
                 </router-link>
@@ -117,7 +114,6 @@
 
           </v-row>
         </v-card>
-        <p class="body-1 blue-grey--text text-center my-3">Join Since : {{ data.date }} </p>
       </div>
     </v-container>
 
@@ -141,7 +137,6 @@ export default {
   }),
 
   components: {
-    // toolbar,
     Toolbar,
     LoadingBar
   },
@@ -187,7 +182,6 @@ export default {
       templateObj.following = following || ''
       templateObj.date = moment(String(created_at)).format('MM/DD/YYYY') || ''
       templateObj.userProfileImage = avatar_url || ''
-      console.log(templateObj)
       return templateObj
     }
   }

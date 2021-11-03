@@ -10,9 +10,10 @@
         <v-col cols="12">
             <v-card flat outlined class="mt-5 bg-none pa-4">
                     <div>
+                      <h1 class="text-center">Repositories</h1>
                         <v-row>
                           <v-col cols="12" md="6"  v-for="(item, i) in data" :key="i">
-                            <v-card flat outlined class="mt-5 repo__card">
+                            <v-card elevation="2" outlined class="mt-5 repo__card">
                                 <a :href="item.htmlUrl" target="_blank" class="decoration__none">
                                   <h4 class="mt-3 ml-3 blue--text">{{item.name}}</h4>
                                 </a>

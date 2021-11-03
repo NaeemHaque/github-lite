@@ -4,37 +4,31 @@
     <v-container v-if="loading">
       <LoadingBar />
     </v-container>
-    <v-container fluid v-if="!loading">
-      <v-row>
-        <v-col cols="12">
-            <v-card flat outlined class="mt-5 bg-none pa-4">
-                    <div>
-                        <v-row>
-                            <v-col cols="12" md="6"  class="mx-auto" v-for="item in data" :key="item.userName">
-                              <router-link :to="'/profile/' + item.userName" class="decoration__none">
-                                <v-card flat outlined class="mt-5 pa-4 repo__card search--item">
-                                    <v-row>
-                                        <v-col cols="2">
-                                          <v-avatar>
-                                            <img
-                                                :src="item.userProfileImage"
-                                                alt="avater"
-                                            >
-                                            </v-avatar>
-                                        </v-col>
-                                        <v-col cols="10">
-                                            <h2 class="headline mt-2 blue-grey--text"> {{ item.userName }} </h2>
-                                        </v-col>
-                                    </v-row>
-                                </v-card>
-                              </router-link>
-                           </v-col>
-                        </v-row>
-                    </div>
-
-            </v-card>
-        </v-col>
-      </v-row>
+    <v-container v-if="!loading">
+      <div class="search-result mx-auto">
+        <v-card outlined flat class="bg-none py-4">
+          <h2 class="text-center my-3" >Folowing</h2>
+          <v-row class="ml-8" >
+            <v-col cols="12" md="4"  class="mx-auto" v-for="item in data" :key="item.userName">
+              <router-link :to="'/profile/' + item.userName" class="decoration__none">
+                <v-card elevation="14" outlined class="pa-3 my-3 search--item rounded-xl ">
+                  <v-row justify="center" align="center">
+                    <v-avatar tile height="250" width="300">
+                      <img
+                        :src="item.userProfileImage"
+                        alt="avater"
+                      >
+                    </v-avatar>
+                  </v-row>
+                  <v-row justify="center">
+                    <h3 class="black--text  mt-7 px-2 my-auto text-center">{{ item.userName }}</h3>
+                  </v-row>
+                </v-card>
+              </router-link>
+            </v-col>
+          </v-row>
+        </v-card>
+      </div>
     </v-container>
   </div>
 </template>
